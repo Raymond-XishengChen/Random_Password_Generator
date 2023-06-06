@@ -39,10 +39,6 @@ function validateLength() {
 
 function generatePassword(){
   validateLength();
-  console.log("password length is " + passwordLength);
-  console.log("is lower?" + isLowerCase);
-  console.log("is upper?" + isUpperCase);
-  console.log("is special?" + isSpecialCharacters);
 
   var passwordInclusion = lowerCasedCharacters;
   var password = "";
@@ -56,14 +52,9 @@ function generatePassword(){
   if (isNumerical){
     passwordInclusion = (passwordInclusion).concat(numericCharacters);
   }
-  console.log(passwordInclusion);
-  var index;
-  for (index = 0; index < passwordLength; index++) {      
-    console.log(password);
-    console.log(index)
-    password = password.concat(passwordInclusion[Math.floor(Math.random()*(passwordInclusion.length-1))]);
-    console.log(Math.floor(Math.random()*(passwordInclusion.length-1)));
 
+  for (var index = 0; index < passwordLength; index++) {      
+    password = password.concat(passwordInclusion[Math.floor(Math.random()*(passwordInclusion.length-1))]);
   }
 
   return password;
