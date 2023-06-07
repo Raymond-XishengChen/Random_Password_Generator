@@ -12,15 +12,18 @@ var upperCasedCharacters = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', '
 
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
+//Create variables for criteria checks
 var isNumerical;
 var isLowerCase;
 var isSpecialCharacters;
 var isUpperCase;
 var passwordLength;
 
-// Define function "generatePassword"
+//Check if password length is valid
+//If it's within the range of 8-128, proceed to check which character types are selected
+//If none of the character type is selected, prompt to start the character type selection again
 function validateLength() {
-  //ask for password length
+  //Ask for password length
   passwordLength = prompt ("Please enter the length of the password (8 - 128 characters)");
 
   //validation for password length
@@ -30,18 +33,19 @@ function validateLength() {
     //Otherwise start character type prompt again
     if (!isLowerCase && !isUpperCase && !isNumerical && !isSpecialCharacters){
       alert("Please select at least one of the character types.");
-      checkCharacterType();
+      validateLength();
     }
   //If password length is not valid, prompt an alert and ask for a password length again
   } else {
     alert ("Password length is not valid, please enter a number between 8 - 128.");
     generatePassword();
   }
-  //prompt to choose if special characters, numerical characters, lower case and upper case are included
+
   //return the string of the generated password
   return;
 }
 
+//Function to choose if special characters, numerical characters, lower case and upper case are included
 function checkCharacterType(){
   isLowerCase = confirm ("Are lower cased characters to be included? \n'OK' to included, 'Cancel' not to include.")
   isUpperCase = confirm ("Are upper cased characters to be included? \n'OK' to included, 'Cancel' not to include.");
@@ -49,31 +53,36 @@ function checkCharacterType(){
   isSpecialCharacters = confirm ("Are special characters to be included? \n'OK' to included, 'Cancel' not to include.");
 }
 
+// Define function "generatePassword"
 function generatePassword(){
   validateLength();
 
+  //Create empty arrays to store the characters selected by user
   var passwordInclusion = [];
   var password = "";
-  console.log(passwordInclusion);
+
+  //Check types of characters to be included, then add all selected characters to the empty array
   if (isLowerCase) {
     passwordInclusion = passwordInclusion.concat(lowerCasedCharacters);
-    console.log(passwordInclusion);
   }
   if (isUpperCase) {
     passwordInclusion = passwordInclusion.concat(upperCasedCharacters);
-    console.log(passwordInclusion);
   }
   if (isSpecialCharacters) {
     passwordInclusion = passwordInclusion.concat(specialCharacters);
-    console.log(passwordInclusion);
   }
   if (isNumerical){
     passwordInclusion = passwordInclusion.concat(numericCharacters);
-    console.log(passwordInclusion);
   }
 
+  //Grab the password length
+  //Math random function generate a random value greater or equal to 0 && less than 1
+  //Use the math random function * then length of the characters inclusion array to generate a random location inside the array
+  //Use the math floor function to get rid of the decial parts
+  //Use a 'for' loop start from 0, and count up to the last character of the desired password length
+  //Add the random character to the end of the "password" array
   for (var index = 0; index < passwordLength; index++) {      
-    password = password.concat(passwordInclusion[Math.floor(Math.random()*(passwordInclusion.length-1))]);
+    password = password.concat(passwordInclusion[Math.floor(Math.random()*(passwordInclusion.length))]);
   }
 
   return password;
