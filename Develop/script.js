@@ -25,9 +25,14 @@ function validateLength() {
 
   //validation for password length
   if (passwordLength >= 8 && passwordLength <= 128) {
-    isNumerical = confirm ("Are numerical characters to be included? \n'OK' to included, 'Cancel' not to include.");
-    isSpecialCharacters = confirm ("Are special characters to be included? \n'OK' to included, 'Cancel' not to include.");
-    isUpperCase = confirm ("Are upper cased characters to be included? \n'OK' to included, 'Cancel' not to include.");
+    checkCharacterType();
+    //Check if at least one character type is selected
+    //Otherwise start character type prompt again
+    if (!isLowerCase && !isUpperCase && !isNumerical && !isSpecialCharacters){
+      alert("Please select at least one of the character types.");
+      checkCharacterType();
+    }
+  //If password length is not valid, prompt an alert and ask for a password length again
   } else {
     alert ("Password length is not valid, please enter a number between 8 - 128.");
     generatePassword();
@@ -37,20 +42,34 @@ function validateLength() {
   return;
 }
 
+function checkCharacterType(){
+  isLowerCase = confirm ("Are lower cased characters to be included? \n'OK' to included, 'Cancel' not to include.")
+  isUpperCase = confirm ("Are upper cased characters to be included? \n'OK' to included, 'Cancel' not to include.");
+  isNumerical = confirm ("Are numerical characters to be included? \n'OK' to included, 'Cancel' not to include.");
+  isSpecialCharacters = confirm ("Are special characters to be included? \n'OK' to included, 'Cancel' not to include.");
+}
+
 function generatePassword(){
   validateLength();
 
-  var passwordInclusion = lowerCasedCharacters;
+  var passwordInclusion = [];
   var password = "";
-  
+  console.log(passwordInclusion);
+  if (isLowerCase) {
+    passwordInclusion = passwordInclusion.concat(lowerCasedCharacters);
+    console.log(passwordInclusion);
+  }
   if (isUpperCase) {
-    passwordInclusion = (passwordInclusion).concat(upperCasedCharacters);
+    passwordInclusion = passwordInclusion.concat(upperCasedCharacters);
+    console.log(passwordInclusion);
   }
   if (isSpecialCharacters) {
-    passwordInclusion = (passwordInclusion).concat(specialCharacters);
+    passwordInclusion = passwordInclusion.concat(specialCharacters);
+    console.log(passwordInclusion);
   }
   if (isNumerical){
-    passwordInclusion = (passwordInclusion).concat(numericCharacters);
+    passwordInclusion = passwordInclusion.concat(numericCharacters);
+    console.log(passwordInclusion);
   }
 
   for (var index = 0; index < passwordLength; index++) {      
